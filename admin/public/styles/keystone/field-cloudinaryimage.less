@@ -1,4 +1,4 @@
-// 
+//
 // Cloudinary Image
 // ==============================
 
@@ -29,11 +29,11 @@
 			position: relative;
 			height: 100px;
 			overflow: hidden;
-			
+
 			.placeholder {
 				height: 90px;
 				opacity: 0.25;
-				
+
 				&.no-preview {
 					width: 100px;
 					display: block;
@@ -54,6 +54,10 @@
 			img {
 				display: block;
 			}
+
+			&.video {
+				min-width: 90px;
+			}
 		}
 		&.removed {
 			.img-thumbnail {
@@ -63,7 +67,7 @@
 			}
 		}
 	}
-	
+
 	.image-details {
 		overflow: hidden;
 		.image-values {
@@ -83,16 +87,16 @@
 			width: 100%;
 		}
 	}
-	
+
 	.image-details + .image-toolbar {
 		margin-top: @input-vspacing;
 	}
 
 	.image-select {
-		clear: both; 
+		clear: both;
 		padding-top: 10px;
 	}
-	
+
 	.upload-queued, .delete-queued, .select-queued {
 		.alert {
 			margin-right: 10px;
@@ -116,7 +120,7 @@
 		margin-top: 0px;
 		margin-right: 0px;
 		margin-bottom: 10px;
-		
+
 		&.image-upload {
 			cursor: pointer;
 			.img-thumbnail {
@@ -148,11 +152,11 @@
 		.placeholder-wrap {
 			height: 100px;
 			overflow: hidden;
-			
+
 			.placeholder {
 				height: 90px;
 				opacity: 0.25;
-				
+
 				&.no-preview {
 					width: 100px;
 					display: block;
