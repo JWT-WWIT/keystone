@@ -451,7 +451,6 @@ s3file.prototype.uploadFile = function(item, file, update, callback) {
  */
 
 s3file.prototype.getRequestHandler = function(item, req, paths, callback) {
-
 	var field = this;
 
 	if (utils.isFunction(paths)) {
@@ -491,6 +490,7 @@ s3file.prototype.getRequestHandler = function(item, req, paths, callback) {
  */
 
 s3file.prototype.handleRequest = function(item, req, paths, callback) {
+	console.trace('handle req');
 	this.getRequestHandler(item, req, paths, callback)();
 };
 
