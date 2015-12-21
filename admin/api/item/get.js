@@ -39,7 +39,7 @@ module.exports = function(req, res) {
 			tasks.push(function(cb) {
 
 				// TODO: proper support for nested relationships in drilldown
-				
+
 				// step back through the drilldown list and load in reverse order to support nested relationships
 				drilldown.def = drilldown.def.split(' ').reverse();
 
@@ -69,7 +69,7 @@ module.exports = function(req, res) {
 									items: _.map(results, function(i) {
 										return {
 											label: refList.getDocumentName(i),
-											href: '/keystone/' + refList.path + '/' + i.id
+											href: keystone.get('contextPath') + '/admin/' + refList.path + '/' + i.id
 										};
 									}),
 									more: (more) ? true : false
@@ -88,7 +88,7 @@ module.exports = function(req, res) {
 									list: refList.getOptions(),
 									items: [{
 										label: refList.getDocumentName(result),
-										href: '/keystone/' + refList.path + '/' + result.id
+										href: keystone.get('contextPath') + '/admin/' + refList.path + '/' + result.id
 									}]
 								});
 							}

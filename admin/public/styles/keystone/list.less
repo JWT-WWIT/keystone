@@ -13,21 +13,21 @@
 // Creating
 // --------------------------------------------------
 .create-item {
-	
+
 	.form, .toolbar-create {
 		display: none;
 	}
-	
+
 	.form {
 		margin-bottom: 10px;
 	}
-	
+
 	.toolbar {
 		border-top: none;
 		padding: 0;
 		margin: 0;
 	}
-	
+
 }
 
 
@@ -40,7 +40,7 @@
 	display: block;
 	font-size: @font-size-base;
 	margin: 0 0 15px;
-	
+
 	.count {
 		.inline-align();
 		margin-right: 10px;
@@ -64,10 +64,10 @@
 }
 .search-list {
 	float: left;
-	
+
 	form {
 		margin-bottom: 0;
-	
+
 		.search-button {
 			margin-top: 0 !important;
 		}
@@ -89,7 +89,7 @@
 		padding: @padding-base-vertical @padding-base-horizontal;
 		top: 0;
 		right: 5px;
-		
+
 		&:hover,
 		&:focus {
 			color: @brand-danger;
@@ -106,7 +106,7 @@
 			width: 300px;
 		}
 	}
-	
+
 }
 .searchbox-form {
 	.inline-align();
@@ -117,13 +117,13 @@
 // Sorting
 // --------------------------------------------------
 .list-sort-dropdown {
-	
+
 	.caret {
 		border-width: @caret-width-large;
 		border-bottom-width: 0;
 		border-top-color: @link-color;
 	}
-	
+
 	.dropdown-toggle:focus,
 	.dropdown-toggle:hover {
 		text-decoration: none;
@@ -131,7 +131,7 @@
 			border-top-color: @link-hover-color;
 		}
 	}
-	
+
 	// menu
 	.dropdown-menu > .active > a {
 		&,
@@ -140,7 +140,7 @@
 			// background-color: @gray;
 		}
 	}
-	
+
 }
 
 
@@ -148,9 +148,9 @@
 // Filtering
 // --------------------------------------------------
 .list-filters {
-	
+
 	margin: -20px 0 20px;
-	
+
 	/*
 	.filter {
 		display: none;
@@ -158,7 +158,7 @@
 		padding-top: 8px;
 		border-top: 1px dashed #ddd;
 	}
-	
+
 	.list-filters-action {
 		margin: 15px 0;
 		border-top: 1px dashed #ddd;
@@ -166,28 +166,28 @@
 		display: none;
 	}
 	*/
-	
+
 	.filter {
 		display: none;
 		padding-top: 8px;
 	}
-	
+
 	.filter.active {
 		display: block;
 	}
-	
+
 	.list-filters-action {
 		border-bottom: 1px solid @gray-lighter;
 		padding-bottom: 20px;
 		margin: 20px 0;
 	}
-	
+
 	.filter-options {
 		padding: 5px 0 0 24px;
 	}
 	.filter-input {
 		.inline-align();
-		
+
 		&.filter-input-lg {
 			width: 300px;
 		}
@@ -197,20 +197,20 @@
 		&.filter-input-sm {
 			width: 100px;
 		}
-		
+
 		select {
 			font-size: @font-size-small;
 			height: 22px;
 			width: 100%;
 		}
 	}
-	
+
 	// clearing
 	.clear-filter {
 		color: @gray-light;
 		font-weight: bold;
 		margin-right: 7px;
-		
+
 		&:hover,
 		&:focus {
 			color: @brand-danger;
@@ -221,7 +221,7 @@
 			color: darken(@brand-danger, 20%);
 		}
 	}
-	
+
 }
 
 // The toolbar starts hidden
@@ -234,25 +234,25 @@
 	.inline-align();
 	.square( 16px );
 	background-repeat: no-repeat;
-	
-	&.fieldicon-text            { background-image: url( "/keystone/images/icons/16/field-text.png" ); }
-	&.fieldicon-textarea          { background-image: url( "/keystone/images/icons/16/field-textarea.png" ); }
-	&.fieldicon-name            { background-image: url( "/keystone/images/icons/16/field-name.png" ); }
-	&.fieldicon-html            { background-image: url( "/keystone/images/icons/16/field-html.png" ); }
-	&.fieldicon-url             { background-image: url( "/keystone/images/icons/16/field-url.png" ); }
-	&.fieldicon-key             { background-image: url( "/keystone/images/icons/16/field-key.png" ); }
-	&.fieldicon-email             { background-image: url( "/keystone/images/icons/16/field-email.png" ); }
-	&.fieldicon-select            { background-image: url( "/keystone/images/icons/16/field-select.png" ); }
-	&.fieldicon-location          { background-image: url( "/keystone/images/icons/16/field-location.png" ); }
-	&.fieldicon-boolean           { background-image: url( "/keystone/images/icons/16/field-boolean.png" ); }
-	&.fieldicon-cloudinaryimage       { background-image: url( "/keystone/images/icons/16/field-image.png" ); }
-	&.fieldicon-s3file          { background-image: url( "/keystone/images/icons/16/field-file.png" ); }
-	&.fieldicon-relationship        { background-image: url( "/keystone/images/icons/16/field-numericSelect.png" ); }
-	&.fieldicon-date            { background-image: url( "/keystone/images/icons/16/field-date.png" ); }
-	&.fieldicon-datetime          { background-image: url( "/keystone/images/icons/16/field-dateTime.png" ); }
-	&.fieldicon-money           { background-image: url( "/keystone/images/icons/16/field-money.png" ); }
-	&.fieldicon-number            { background-image: url( "/keystone/images/icons/16/field-number.png" ); }
-	&.fieldicon-sort            { background-image: url( "/keystone/images/icons/16/field-sort.png" ); }
+
+	&.fieldicon-text            { background-image: url( "@{contextPath}/images/icons/16/field-text.png" ); }
+	&.fieldicon-textarea          { background-image: url( "@{contextPath}/images/icons/16/field-textarea.png" ); }
+	&.fieldicon-name            { background-image: url( "@{contextPath}/images/icons/16/field-name.png" ); }
+	&.fieldicon-html            { background-image: url( "@{contextPath}/images/icons/16/field-html.png" ); }
+	&.fieldicon-url             { background-image: url( "@{contextPath}/images/icons/16/field-url.png" ); }
+	&.fieldicon-key             { background-image: url( "@{contextPath}/images/icons/16/field-key.png" ); }
+	&.fieldicon-email             { background-image: url( "@{contextPath}/images/icons/16/field-email.png" ); }
+	&.fieldicon-select            { background-image: url( "@{contextPath}/images/icons/16/field-select.png" ); }
+	&.fieldicon-location          { background-image: url( "@{contextPath}/images/icons/16/field-location.png" ); }
+	&.fieldicon-boolean           { background-image: url( "@{contextPath}/images/icons/16/field-boolean.png" ); }
+	&.fieldicon-cloudinaryimage       { background-image: url( "@{contextPath}/images/icons/16/field-image.png" ); }
+	&.fieldicon-s3file          { background-image: url( "@{contextPath}/images/icons/16/field-file.png" ); }
+	&.fieldicon-relationship        { background-image: url( "@{contextPath}/images/icons/16/field-numericSelect.png" ); }
+	&.fieldicon-date            { background-image: url( "@{contextPath}/images/icons/16/field-date.png" ); }
+	&.fieldicon-datetime          { background-image: url( "@{contextPath}/images/icons/16/field-dateTime.png" ); }
+	&.fieldicon-money           { background-image: url( "@{contextPath}/images/icons/16/field-money.png" ); }
+	&.fieldicon-number            { background-image: url( "@{contextPath}/images/icons/16/field-number.png" ); }
+	&.fieldicon-sort            { background-image: url( "@{contextPath}/images/icons/16/field-sort.png" ); }
 }
 .dropdown-menu .fieldicon {
 	margin-right: 10px;
@@ -271,18 +271,18 @@
 	margin-bottom: 1.5em;
 	table-layout: fixed;
 	width: 100%;
-	
+
 	.control {
 		padding: @table-cell-padding - 1;
 		text-align: center;
 		width: 18px;
-		
+
 		a {
 			display: block;
 			width: 16px;
 			height: 18px;
 			padding: 0px;
-			background: url('/keystone/images/icons/list-controls.png') top left no-repeat;
+			background: url('@{contextPath}/images/icons/list-controls.png') top left no-repeat;
 			opacity: 0.5;
 		}
 		a:hover {
@@ -299,21 +299,21 @@
 	.control + .control {
 		padding-left: @table-cell-padding / 2;
 	}
-	
+
 	.control-delete i {
 		background-position: 0 0;
 	}
-	
+
 	img {
 		margin: @table-cell-padding;
 	}
-	
+
 	.col-value, td a {
 		max-width: 100%;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
-	
+
 	.color-preview {
 		display: inline-block;
 		border-radius: 5px;

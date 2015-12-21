@@ -40,7 +40,7 @@ exports = module.exports = function(req, res) {
 			} else if ('function' === typeof keystone.get('signin redirect')) {
 				keystone.get('signin redirect')(user, req, res);
 			} else {
-				res.redirect('/keystone');
+				res.redirect(keystone.get('contextPath') + '/admin/');
 			}
 
 		};

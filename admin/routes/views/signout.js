@@ -11,7 +11,7 @@ exports = module.exports = function(req, res) {
 		} else if ('function' === typeof keystone.get('signout redirect')) {
 			return keystone.get('signout redirect')(req, res);
 		} else {
-			return res.redirect('/keystone');
+			return res.redirect(keystone.get('contextPath') + '/admin/');
 		}
 
 		keystone.render(req, res, 'signout', {

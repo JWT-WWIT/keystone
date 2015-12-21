@@ -4,18 +4,18 @@ include ../mixins/rows
 include ../mixins/pagination
 
 block js
-	script(src='/keystone/js/views/list.js')
-	script(src='/keystone/js/lib/browserified/querystring.js')
-	script(src='/keystone/js/lib/browserified/queryfilter.js')
+	script(src='#{contextPath}/admin/js/views/list.js')
+	script(src='#{contextPath}/admin/js/lib/browserified/querystring.js')
+	script(src='#{contextPath}/admin/js/lib/browserified/queryfilter.js')
 	script.
 		Keystone.list = !{JSON.stringify(list.getOptions())};
 		Keystone.wysiwyg = { options: !{JSON.stringify(wysiwygOptions)} };
-		
+
 		// Support for the POST-based create process
 		Keystone.showCreateForm = !{JSON.stringify(showCreateForm)};
 		Keystone.createFormData = !{JSON.stringify(submitted)};
 		Keystone.createFormErrors = !{JSON.stringify(createErrors || null)};
-		
+
 		// Legacy data for List view
 		Keystone.list.cols = !{JSON.stringify(colPaths)};
 		Keystone.list.perPage = !{ Number(list.perPage) || 50 };
@@ -25,21 +25,21 @@ block js
 		Keystone.sort = '#{sort.by}';
 		Keystone.query = '#{query}';
 		Keystone.csrf_query = '!{csrf_query}';
-	script(src='/keystone/js/packages.js')
-	script(src='/keystone/js/fields.js')
-	script(src='/keystone/js/list.js')
-			
+	script(src='#{contextPath}/admin/js/packages.js')
+	script(src='#{contextPath}/admin/js/fields.js')
+	script(src='#{contextPath}/admin/js/list.js')
+
 block content
 	//- New React View
 	//- ------------------------------
 	div#list-view
-	
+
 	//-
 	//- List
 	//- ------------------------------
-	
+
 	- var xFilters = _.size(filters);
-	
+
 	.page-header.list-header(class=!items.total && !search && !xFilters ? 'empty-list' : '')
 		h1
 			if items.total
@@ -50,15 +50,15 @@ block content
 
 			.search-sort(style='display:inline-block')
 				if search
-					span.text-muted  matching 
+					span.text-muted  matching
 					span=search
 					if xFilters
 						span.text-muted  and
 						span= utils.plural(xFilters, ' * other filter')
 				else if xFilters
-					span.text-muted  matching 
+					span.text-muted  matching
 					span= utils.plural(xFilters, ' * filter')
-			
+
 				//- Sort
 				if items.results.length
 					if sort.by
@@ -136,13 +136,13 @@ block content
 											li: a(href=link_to({ sort: list.tracking.updatedAt }))
 												span(class='fieldicon fieldicon-date')
 												span Date Modified
-		
-		
+
+
 		//-
 		//- Filters
 		//- ------------------------------
 		form#list-filters
-			
+
 			//-
 			//- Search Bar
 			//- ------------------------------
@@ -154,7 +154,7 @@ block content
 								button(type='button', data-toggle='dropdown', title='Recent Filters').btn.btn-default.dropdown-toggle
 									span.sr-only Recent Filters
 									span.ion-clock
-									|  
+									| &nbsp;
 									span.caret
 								ul.dropdown-menu
 									li.dropdown-header Recent Filters
@@ -162,7 +162,7 @@ block content
 								.searchbox-field
 									input(type='search', name='search', placeholder='Search #{list.plural.toLowerCase()}', value=search).form-control.js-search-list.searchbox-input
 									if search
-										a(href='/keystone/#{list.path}', title='Clear search').search-list-clear &times;
+										a(href='#{contextPath}/admin/#{list.path}', title='Clear search').search-list-clear &times;
 								.searchbox-button: button(type='submit').btn.btn-default.btn-search.searchbox-submit
 									span.visible-xs Go
 									span.hidden-xs Search
@@ -173,7 +173,7 @@ block content
 								span.hidden-xs Search
 							.dropdown-inline.list-filter-dropdown
 								button(type='button', data-toggle='dropdown').btn.btn-default.dropdown-toggle
-									| Add Filter 
+									| Add Filter
 									b.caret
 								ul.dropdown-menu: each el in list.uiElements
 									if el.type == 'heading'
@@ -182,7 +182,7 @@ block content
 										li: a(href=js, data-path=el.field.path).add-list-filter
 											span(class='fieldicon fieldicon-' + el.field.type)
 											span= el.field.label
-					
+
 					//- lg screens only
 					//- columns and download aren't relevant when using a mobile device
 					if items.total
@@ -191,7 +191,7 @@ block content
 								a(href=download_link, data-confirm="Download a .csv of #{utils.plural(items.total, '* ' + list.singular, '* ' + list.plural).toLowerCase()}?").btn.btn-default Download
 							div(style='margin-right: 10px;').dropdown.list-columns-dropdown.pull-right
 								button(type='button', data-toggle='dropdown').btn.btn-default.dropdown-toggle
-									| Columns 
+									| Columns
 									b.caret
 								ul.dropdown-menu
 									each el in list.uiElements
@@ -216,8 +216,8 @@ block content
 										li: a(href=link_to({ cols: undefined }))
 											span.ion-close.icon
 											span Reset to default
-			
-			
+
+
 			//-
 			//- List Filters
 			//- ------------------------------
@@ -242,7 +242,7 @@ block content
 											| exact match
 									.filter-input.filter-input-md: input(type='text', name='value', value=ops.value).form-control.input-xs
 									button(type='button', data-toggle='button', class=ops.inverse ? 'active' : '', data-opt='inv', data-value='true').btn.btn-xs.btn-default invert
-								
+
 								//- Numeric Fields
 								if field.type == 'number' || field.type == 'money'
 									.btn-group.btn-group-operator.btn-group-xs(data-toggle='buttons')
@@ -258,7 +258,7 @@ block content
 										button(type='button', class=ops.operator == 'bt' ? 'active' : '', data-opt='operator', data-value='bt').btn.btn-default
 											input(type='radio', name='options')
 											| between
-								
+
 									.filter-input
 										.filter-input-range.form-inline.text-sm(style='display:none')
 											input(type='number', value=(ops.operator === 'bt' && ops.value[0])).form-control.input-xs.field-inline--xs.filter-input-range1
@@ -267,7 +267,7 @@ block content
 											span.mh-1 (inclusive)
 										.filter-input-standard(style='display:none')
 											input(type='number', name='value', value=(ops.operator !== 'bt' && ops.value)).form-control.input-xs
-							
+
 								//- Date
 								if field.type == 'date' || field.type == 'datetime'
 									.btn-group.btn-group-operator.btn-group-xs(data-toggle='buttons')
@@ -283,7 +283,7 @@ block content
 										button(type='button', class=ops.operator == 'bt' ? 'active' : '', data-opt='operator', data-value='bt').btn.btn-default
 											input(type='radio', name='options')
 											| between
-								
+
 									.filter-input
 										.filter-input-range.form-inline.text-sm(style='display:none')
 											input(type='text', value=(ops.operator === 'bt' && ops.value[0])).form-control.input-xs.field-inline--sm.ui-datepicker.filter-input-range1
@@ -292,7 +292,7 @@ block content
 											span.mh-1 (inclusive)
 										.filter-input-standard(style='display:none')
 											input(type='text', name='value', value=(ops.operator !== 'bt' && ops.value)).form-control.input-xs.ui-datepicker
-								
+
 								//- Location
 								if field.type == 'location'
 									- ops.value = ops.value || []
@@ -301,7 +301,7 @@ block content
 									.filter-input.filter-input-sm: input(type='text', name='state', value=ops.value[2], placeholder='State').form-control.input-xs
 									.filter-input.filter-input-sm: input(type='text', name='postcode', value=ops.value[3], placeholder='Postcode').form-control.input-xs
 									.filter-input.filter-input-sm: input(type='text', name='country', value=ops.value[4], placeholder='Country').form-control.input-xs
-								
+
 								//- Select
 								if field.type == 'select'
 									.btn-group.btn-group-xs(data-toggle='buttons')
@@ -315,7 +315,7 @@ block content
 										option(value='')
 										each op in field.ops
 											option(value=op.value, selected=ops.value == op.value)= op.label
-								
+
 								//- Boolean
 								if field.type == 'boolean'
 									.btn-group.btn-group-xs(data-toggle='buttons')
@@ -325,7 +325,7 @@ block content
 										button(type='button', class=ops.value === false || ops.value === 'false' ? 'active' : '', data-opt='value', data-value='false').btn.btn-default
 											input(type="radio", name="options")
 											| not checked
-								
+
 								//- Cloudinary Image
 								if field.type == 'cloudinaryimage'
 									.btn-group.btn-group-xs(data-toggle='buttons')
@@ -335,7 +335,7 @@ block content
 										button(type='button', class=ops.value === false ? 'active' : '', data-opt='value', data-value='false').btn.btn-default
 											input(type="radio", name="options")
 											| has no image
-								
+
 								//- S3 File
 								if field.type == 's3file'
 									.btn-group.btn-group-xs(data-toggle='buttons')
@@ -355,7 +355,7 @@ block content
 										button(type='button', class=ops.value === false ? 'active' : '', data-opt='value', data-value='false').btn.btn-default
 											input(type="radio", name="options")
 											| has no file
-								
+
 								//- Relationships
 								if field.type == 'relationship'
 									.btn-group.btn-group-xs(data-toggle='buttons')
@@ -372,23 +372,23 @@ block content
 										data-ref-path=field.refList.path,
 										data-ref-singular=field.refList.singular,
 										data-ref-plural=field.refList.plural).ui-select2-ref
-								
+
 				.list-filters-action
 					button(type='submit').btn.btn-default.btn-filter Search
-					a(href='/keystone/#{list.path}').btn.btn-link.btn-cancel clear filters
-			
+					a(href='#{contextPath}/admin/#{list.path}').btn.btn-link.btn-cancel clear filters
+
 	if items.results.length
 		//-
 		//- Pagination
 		//- ------------------------------
-		
+
 		.list-pagination
 			if items.totalPages > 1
 				+pagination(items)
 			else
 				.count Showing #{utils.plural(items.total, '* ' + list.singular, '* ' + list.plural)}
-		
-		
+
+
 		- var sortable = list.get('sortable') && !list.get('sortContext') && sort.by == 'sortOrder'
 		- var firstColspan = 1;
 		.items-list-wrapper: table(cellpadding=0, cellspacing=0, class=sortable ? 'sortable' : false, data-list-path=list.path).table.items-list
@@ -421,8 +421,8 @@ block content
 			tbody
 				each item in items.results
 					+row(list, colums, item)
-								
+
 		if items.totalPages > 1
 			.list-pagination
 				+pagination(items)
-	
+

@@ -36,7 +36,8 @@ var Keystone = function() {
 		'auto update': false,
 		'model prefix': null,
 		'module root': moduleRoot,
-		'frame guard': 'sameorigin'
+		'frame guard': 'sameorigin',
+		'contextPath': ''
 	};
 	this._redirects = {};
 
@@ -122,13 +123,15 @@ Keystone.prototype.wrapHTMLError = require('./lib/core/wrapHTMLError');
 
 /* Expose Admin UI App */
 Keystone.prototype.adminApp = {
-	staticRouter: require('./admin/app/static')
+	// staticRouter: require('./admin/app/static')(this.get('contextPath'))
+	// staticRouter: require('./admin/app/static')('/pioneering-process')
+	staticRouter: require('./admin/app/static')('')
 };
 
 /* Legacy Attach Mechanisms */
 Keystone.prototype.static = function(app) {
 	if (!this.get('headless')) {
-		app.use('/keystone', Keystone.prototype.adminApp.staticRouter);
+		app.use(this.get('contextPath') + '/admin', Keystone.prototype.adminApp.staticRouter);
 	}
 };
 

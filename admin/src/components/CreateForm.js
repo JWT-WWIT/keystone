@@ -4,9 +4,9 @@ var _ = require('underscore'),
 	InvalidFieldType = require('./InvalidFieldType');
 
 var Form = React.createClass({
-	
+
 	displayName: 'CreateForm',
-	
+
 	getDefaultProps: function() {
 		return {
 			err: null,
@@ -14,23 +14,23 @@ var Form = React.createClass({
 			animate: false
 		};
 	},
-	
+
 	getInitialState: function() {
-		
+
 		var values = this.props.values;
-		
+
 		_.each(this.props.list.fields, function(field) {
 			if (!values[field.path]) {
 				values[field.path] = field.defaultValue;
 			}
 		});
-		
+
 		return {
 			values: values
 		};
-		
+
 	},
-	
+
 	handleChange: function(event) {
 		var values = this.state.values;
 		values[event.path] = event.value;
@@ -43,7 +43,7 @@ var Form = React.createClass({
 		this._bodyStyleOverflow = document.body.style.overflow;
 		document.body.style.overflow = 'hidden';
 	},
-	
+
 	componentDidMount: function() {
 		if (this.refs.focusTarget) {
 			this.refs.focusTarget.focus();
@@ -53,7 +53,7 @@ var Form = React.createClass({
 	componentWillUnmount: function() {
 		document.body.style.overflow = this._bodyStyleOverflow;
 	},
-	
+
 	getFieldProps: function(field) {
 		var props = _.clone(field);
 		props.value = this.state.values[field.path];
@@ -62,18 +62,18 @@ var Form = React.createClass({
 		props.mode = 'create';
 		return props;
 	},
-	
+
 	render: function() {
-		
+
 		var errors = null,
 			form = {},
 			list = this.props.list,
-			formAction = '/keystone/' + list.path,
+			formAction = Keystone.contextPath + '/admin/' + list.path,
 			nameField = this.props.list.nameField,
 			focusRef;
-		
+
 		var modalClass = 'modal modal-md' + (this.props.animate ? ' animate' : '');
-		
+
 		if (this.props.err && this.props.err.errors) {
 			var msgs = {};
 			_.each(this.props.err.errors, function(err, path) {
@@ -86,7 +86,7 @@ var Form = React.createClass({
 				</div>
 			);
 		}
-		
+
 		if (list.nameIsInitial) {
 			var nameFieldProps = this.getFieldProps(nameField);
 			nameFieldProps.ref = focusRef = 'focusTarget';
@@ -97,26 +97,26 @@ var Form = React.createClass({
 			}
 			form[nameField.path] = React.createElement(Fields[nameField.type], nameFieldProps);
 		}
-		
+
 		_.each(list.initialFields, function(path) {
-				
+
 			var field = list.fields[path];
-			
+
 			if ('function' !== typeof Fields[field.type]) {
 				form[field.path] = React.createElement(InvalidFieldType, { type: field.type, path: field.path });
 				return;
 			}
-			
+
 			var fieldProps = this.getFieldProps(field);
-			
+
 			if (!focusRef) {
 				fieldProps.ref = focusRef = 'focusTarget';
 			}
-			
+
 			form[field.path] = React.createElement(Fields[field.type], fieldProps);
-			
+
 		}, this);
-		
+
 		return (
 			<div>
 				<div className={modalClass}>
@@ -143,7 +143,7 @@ var Form = React.createClass({
 			</div>
 		);
 	}
-	
+
 });
 
 module.exports = Form;
