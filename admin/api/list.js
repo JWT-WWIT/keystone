@@ -27,7 +27,7 @@ exports = module.exports = function(req, res) {
 			var limit = req.query.limit || 50;
 			var page = req.query.page || 1;
 			var skip = limit * (page - 1);
-				
+
 			var filters = req.list.getSearchFilters(req.query.q);
 
 			var count = req.list.model.count(filters);
@@ -48,7 +48,7 @@ exports = module.exports = function(req, res) {
 					count.where(key).equals(value ? value : null);
 				});
 			}
-			
+
 			count.exec(function(err, total) {
 
 				if (err) return sendError('database error', err);
@@ -145,11 +145,11 @@ exports = module.exports = function(req, res) {
 		break;
 
 		case 'fetch':
-		
+
 			if (!keystone.security.csrf.validate(req)) {
 				return sendError('invalid csrf');
 			}
-			
+
 			(function() {
 
 				var queryFilters = req.list.getSearchFilters(req.query.search, req.query.filters);
@@ -166,7 +166,7 @@ exports = module.exports = function(req, res) {
 							}
 						}
 						params = querystring.stringify(_.defaults(params, queryParams));
-						return '/keystone/' + req.list.path + (p ? '/' + p : '') + (params ? '?' + params : '');
+						return Keystone.contextPath + '/admin/' + req.list.path + (p ? '/' + p : '') + (params ? '?' + params : '');
 					};
 
 				var query = req.list.model.find(queryFilters).sort(req.query.sort).skip(skip).limit(1);
@@ -194,7 +194,7 @@ exports = module.exports = function(req, res) {
 						count: 1
 					});
 				});
-			
+
 			})();
 
 		break;

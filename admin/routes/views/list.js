@@ -70,7 +70,7 @@ exports = module.exports = function(req, res) {
 				}
 			}
 			params = querystring.stringify(_.defaults(params, queryParams));
-			return '/keystone/' + req.list.path + (p ? '/' + p : '') + (params ? '?' + params : '');
+			return keystone.get('contextPath') + '/admin/' + req.list.path + (p ? '/' + p : '') + (params ? '?' + params : '');
 		};
 
 		query.exec(function(err, items) {
@@ -82,15 +82,15 @@ exports = module.exports = function(req, res) {
 
 			// if there were results but not on this page, reset the page
 			if (req.params.page && items.total && !items.results.length) {
-				return res.redirect('/keystone/' + req.list.path);
+				return res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path);
 			}
 
 			// go straight to the result if there was a search, and only one result
 			if (req.query.search && items.total === 1 && items.results.length === 1) {
-				return res.redirect('/keystone/' + req.list.path + '/' + items.results[0].id);
+				return res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path + '/' + items.results[0].id);
 			}
 
-			var download_link = '/keystone/download/' + req.list.path;
+			var download_link = keystone.get('contextPath') + '/admin/download/' + req.list.path;
 			var downloadParams = {};
 
 			if (req.query.q) {
@@ -164,7 +164,7 @@ exports = module.exports = function(req, res) {
 				} else {
 					req.flash('success', 'All ' + req.list.plural + ' updated successfully.');
 				}
-				res.redirect('/keystone/' + req.list.path);
+				res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path);
 			});
 		})();
 
@@ -178,7 +178,7 @@ exports = module.exports = function(req, res) {
 		}
 
 		req.list.model.findById(req.query['delete']).exec(function (err, item) { //eslint-disable-line dot-notation
-			if (err || !item) return res.redirect('/keystone/' + req.list.path);
+			if (err || !item) return res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path);
 
 			item.remove(function (err) {
 				if (err) {
@@ -188,7 +188,7 @@ exports = module.exports = function(req, res) {
 				} else {
 					req.flash('success', req.list.singular + ' deleted successfully.');
 				}
-				res.redirect('/keystone/' + req.list.path);
+				res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path);
 			});
 		});
 
@@ -208,7 +208,7 @@ exports = module.exports = function(req, res) {
 				renderView();
 			} else {
 				req.flash('success', 'New ' + req.list.singular + ' ' + req.list.getDocumentName(item) + ' created.');
-				return res.redirect('/keystone/' + req.list.path + '/' + item.id);
+				return res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path + '/' + item.id);
 			}
 
 		});
@@ -239,7 +239,7 @@ exports = module.exports = function(req, res) {
 				return renderView();
 			}
 			req.flash('success', 'New ' + req.list.singular + ' ' + req.list.getDocumentName(item) + ' created.');
-			return res.redirect('/keystone/' + req.list.path + '/' + item.id);
+			return res.redirect(keystone.get('contextPath') + '/admin/' + req.list.path + '/' + item.id);
 		});
 
 	} else {

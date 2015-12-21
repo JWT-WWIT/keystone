@@ -97,8 +97,7 @@ cloudinaryvideo.prototype.addToSchema = function() {
 		// transcode_batch_ids:		[String],
 		duration:		Number,
 		rotation:		Number,
-		eager: [keystone.mongoose.Schema.Types.Mixed],
-		transcodes: [keystone.mongoose.Schema.Types.Mixed]
+		eager: [keystone.mongoose.Schema.Types.Mixed]
 	});
 
 	schema.add(schemaPaths);
@@ -432,13 +431,7 @@ cloudinaryvideo.prototype.getRequestHandler = function(item, req, paths, callbac
 				if (result.error) {
 					callback(result.error);
 				} else {
-					result.transcodes = result.eager;
 					item.set(field.path, result);
-
-					// console.log(item);
-					// console.log('update data!!!', result.eager);
-					// item.set(field.path + '.transcodes', result.eager);
-
 					callback();
 				}
 			};

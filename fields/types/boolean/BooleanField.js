@@ -2,24 +2,24 @@ var React = require('react'),
 	Field = require('../Field');
 
 module.exports = Field.create({
-	
+
 	displayName: 'BooleanField',
-	
+
 	valueChanged: function(event) {
 		this.props.onChange({
 			path: this.props.path,
 			value: event.target.checked
 		});
 	},
-	
+
 	renderUI: function() {
-		
+
 		var input, fieldClassName = 'field-ui';
-		
+
 		if (this.props.indent) {
 			fieldClassName += ' field-indented';
 		}
-		
+
 		if (this.shouldRenderField()) {
 			input = (
 				<div className={fieldClassName}>
@@ -31,7 +31,7 @@ module.exports = Field.create({
 			);
 		} else {
 			var state = this.props.value ? 'checked' : 'unchecked';
-			var imgSrc = '/keystone/images/icons/16/checkbox-' + state + '.png';
+			var imgSrc = Keystone.contextPath + '/admin/images/icons/16/checkbox-' + state + '.png';
 			input = (
 				<div className={fieldClassName}>
 					<img src={imgSrc} width='16' height='16' className={state} style={{ marginRight: 5 }} />
@@ -39,8 +39,8 @@ module.exports = Field.create({
 				</div>
 			);
 		}
-		
+
 		return <div className="field field-type-boolean">{input}</div>;
 	}
-	
+
 });

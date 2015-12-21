@@ -1,8 +1,8 @@
 jQuery(function($) {
 	/*global moment*/
-	
+
 	// show hide the "back to website" message in the navbar
-	
+
 	$('.navbar-backtobrand-trigger').mouseenter(function(e) {// eslint-disable-line no-unused-vars
 		$('.navbar-backtobrand-message').addClass('active');
 	}).mouseleave(function() {
@@ -16,8 +16,8 @@ jQuery(function($) {
 			e.preventDefault();
 		}
 	});
-	
-	
+
+
 	$('img.img-load').each(function() {
 		var $img = $(this);
 		$img.css('opacity', 0);
@@ -57,14 +57,14 @@ jQuery(function($) {
 			$(this).hide();
 		}
 	});
-	
+
 	$('.items-list.sortable').on('ui.sorted', function() {
 		var $this = $(this),
 			listPath = $this.data('listPath'),
 			order = _.pluck($this.find('tbody tr'), 'id');
 		$.ajax({
 			type: 'POST',
-			url: '/keystone/api/' + listPath + '/order',
+			url: Keystone.contextPath + '/admin/api/' + listPath + '/order',
 			data: Keystone.csrf({
 				order: order.join(',')
 			}),
@@ -73,11 +73,11 @@ jQuery(function($) {
 			}
 		});
 	});
-	
+
 	$('.ui-select2-ref').each(function(i, el) {
-		
+
 		el = $(el);
-		
+
 		var multi = el.data('refMany'),
 			refPath = el.data('refPath'),
 			refFilters = el.data('refFilters'),
@@ -86,23 +86,23 @@ jQuery(function($) {
 				plural: el.data('refPlural')
 			},
 			perPage = 10;
-		
+
 		var args = {
 			context: 'relationship',
 			list: Keystone.list.path,
 			field: el.attr('name')
 		};
-		
+
 		if (Keystone.item) {
 			args.item = Keystone.item.id;
 		}
-		
+
 		el.select2({
 			placeholder: 'Search for ' + (multi ? label.plural : ' a ' + label.singular) + '...',
 			allowClear: true,
 			multiple: multi,
 			ajax: {
-				url: '/keystone/api/' + refPath + '/autocomplete',
+				url: Keystone.contextPath + '/admin/api/' + refPath + '/autocomplete',
 				dataType: 'json',
 				quietMillis: 500,
 				data: function(term, page) {
@@ -149,19 +149,19 @@ jQuery(function($) {
 			initSelection: function(element, callback) {
 				var ids = $(element).val();
 				if (ids !== '') {
-					
+
 					ids = ids.split(',');
 					var data = [];
-					
+
 					var loaded = function(rtn) {
 						data.push(rtn);
 						if (data.length == ids.length) {// eslint-disable-line eqeqeq
 							callback(multi ? data : data[0]);
 						}
 					};
-					
+
 					$.each(ids, function() {
-						$.ajax('/keystone/api/' + refPath + '/' + this + '?simple', {
+						$.ajax(Keystone.contextPath + '/admin/api/' + refPath + '/' + this + '?simple', {
 							dataType: 'json'
 						}).done(loaded);
 					});
@@ -181,14 +181,14 @@ jQuery(function($) {
 				if (val == '') {// eslint-disable-line eqeqeq
 					$gotoLink.hide();
 				} else {
-					$gotoLink.attr('href', '/keystone/' + refPath + '/' + val);
+					$gotoLink.attr('href', Keystone.contextPath + '/admin/' + refPath + '/' + val);
 					$gotoLink.show();
 				}
 			});
 		}
-		
+
 	});
-	
+
 	$('.field.type-relationship input[data-ref-filters]').each(function() {
 
 		var $input = $(this),
@@ -241,5 +241,5 @@ jQuery(function($) {
 			$btn.click();
 		}, 1);
 	});
-	
+
 });
