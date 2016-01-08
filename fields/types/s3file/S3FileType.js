@@ -412,7 +412,7 @@ s3file.prototype.uploadFile = function(item, file, update, callback) {
 			}
 
 			var protocol = (field.s3config.protocol && field.s3config.protocol + ':') || '',
-				url = res.req.url.replace(/^https?:/i, protocol);
+				url = unescape(res.req.url.replace(/^https?:/i, protocol));
 
 			var fileData = {
 				filename: filename,
