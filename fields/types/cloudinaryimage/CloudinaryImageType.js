@@ -379,11 +379,15 @@ cloudinaryimage.prototype.getRequestHandler = function(item, req, paths, callbac
 			var imageDelete;
 
 			if (tp.length) {
-				tp += '_';
+				tp += '-';
 			}
 
 			var uploadOptions = {
-				tags: [tp + field.list.path + '_' + field.path, tp + field.list.path + '_' + field.path + '_' + item.id]
+				tags: [
+					tp + field.list.path + '-' + field.path,
+					tp + item.id,
+					tp + field.list.path + '-' + field.path + '-' + item.id
+				]
 			};
 
 			if (keystone.get('cloudinary folders')) {
@@ -392,10 +396,6 @@ cloudinaryimage.prototype.getRequestHandler = function(item, req, paths, callbac
 
 			if (keystone.get('cloudinary prefix')) {
 				uploadOptions.tags.push(keystone.get('cloudinary prefix'));
-			}
-
-			if (keystone.get('env') !== 'production') {
-				uploadOptions.tags.push(tp + 'dev');
 			}
 
 			if (field.options.publicID) {

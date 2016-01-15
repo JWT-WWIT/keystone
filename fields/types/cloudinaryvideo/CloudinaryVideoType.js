@@ -238,12 +238,13 @@ cloudinaryvideo.prototype.addToSchema = function() {
 		 *
 		 * @api public
 		 */
-		delete: function() {
+		'delete': function() {
 			var promise = new MPromise();
 
-			cloudinary.uploader.destroy(this.get(paths.public_id), function(result) {
+			var tag = (keystone.get('cloudinary prefix') || '') + '-' + this.id;
+			cloudinary.api.delete_resources_by_tag(tag, function(result) {
 				promise.fulfill(result);
-			});
+			}, {resource_type: 'video'});
 			reset(this);
 
 			return promise;
@@ -257,9 +258,8 @@ cloudinaryvideo.prototype.addToSchema = function() {
 			var promise = new MPromise();
 
 			console.log('upload large', file, options);
-			// cloudinary.uploader.upload_large(file, function(result) {
-			cloudinary.uploader.upload(file, function(result) {
-				console.log('video processed', result);
+			cloudinary.uploader.upload_large(file, function(result) {
+				console.log('video uploaded', result);
 				promise.fulfill(result);
 			}, options);
 
@@ -387,24 +387,25 @@ cloudinaryvideo.prototype.getRequestHandler = function(item, req, paths, callbac
 			var imageDelete;
 
 			if (tp.length) {
-				tp += '_';
+				tp += '-';
 			}
 
 			var uploadOptions = {
 				resource_type: 'video',
-				tags: [tp + field.list.path + '_' + field.path, tp + field.list.path + '_' + field.path + '_' + item.id]
+				overwrite: true,
+				tags: [
+					tp + field.list.path + '-' + field.path,
+					tp + item.id,
+					tp + field.list.path + '-' + field.path + '-' + item.id
+				]
 			};
 
 			if (keystone.get('cloudinary folders')) {
-				uploadOptions.folder = item.get(paths.folder);
+				uploadOptions.folder = item.get(paths.folder) + '/' + item.id;
 			}
 
 			if (keystone.get('cloudinary prefix')) {
 				uploadOptions.tags.push(keystone.get('cloudinary prefix'));
-			}
-
-			if (keystone.get('env') !== 'production') {
-				uploadOptions.tags.push(tp + 'dev');
 			}
 
 			if (field.options.publicID) {
@@ -417,7 +418,6 @@ cloudinaryvideo.prototype.getRequestHandler = function(item, req, paths, callbac
 			}
 
 			if (field.options.autoCleanup && item.get(field.paths.exists)) {
-				// capture image delete promise
 				imageDelete = field.apply(item, 'delete');
 			}
 
