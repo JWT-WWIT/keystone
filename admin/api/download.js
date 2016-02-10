@@ -53,7 +53,12 @@ exports = module.exports = function(req, res) {
 					}
 				}
 			} else {
-				rowData[field.path] = field.format(i);
+				// Erk - Don't html escape textarea content in csv.
+				if (field.type === 'textarea') {
+					rowData[field.path] = i.get(field.path);
+				} else {
+					rowData[field.path] = field.format(i);
+				}
 			}
 		});
 
@@ -77,7 +82,7 @@ exports = module.exports = function(req, res) {
 			var content = baby.unparse(data, {
 				delimiter: keystone.get('csv field delimiter') || ','
 			});
-			
+
 			res.end(content, 'utf-8');
 		};
 
