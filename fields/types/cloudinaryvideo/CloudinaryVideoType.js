@@ -415,6 +415,8 @@ cloudinaryvideo.prototype.getRequestHandler = function(item, req, paths, callbac
 				}
 			} else if (field.options.filenameAsPublicID) {
 				uploadOptions.public_id = req.files[paths.upload].originalname.substring(0, req.files[paths.upload].originalname.lastIndexOf('.'));
+				// Discard default filename of "file" from php uploader. 
+				uploadOptions.discard_original_filename = true;				
 			}
 
 			if (field.options.autoCleanup && item.get(field.paths.exists)) {
